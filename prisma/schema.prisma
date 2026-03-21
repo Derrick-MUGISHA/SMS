@@ -1,0 +1,62 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+}
+
+enum Role {
+  STUDENT
+  SUPERVISOR
+}
+
+model User {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  email      String   @unique
+  password   String
+  role       Role
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  enrollments Enrollment[]
+  attendances Attendance[] @relation("StudentAttendance")
+  supervisor  Attendance[] @relation("SupervisorAttendance")
+}
+
+model Course {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  courseName  String
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  enrollments Enrollment[]
+  attendances Attendance[]
+}
+
+model Enrollment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  courseId  String   @db.ObjectId
+  createdAt DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  course Course @relation(fields: [courseId], references: [id])
+
+  @@unique([userId, courseId])
+}
+
+model Attendance {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
+  courseId     String   @db.ObjectId
+  supervisorId String   @db.ObjectId
+  date         DateTime @default(now())
+  status       Boolean  
+
+  student     User   @relation("StudentAttendance", fields: [userId], references: [id])
+  course      Course @relation( fields: [courseId], references: [id])
+  supervisor  User   @relation("SupervisorAttendance", fields: [supervisorId], references: [id])
+}
