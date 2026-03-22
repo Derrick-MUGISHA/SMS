@@ -18,7 +18,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { AttendanceViewDto } from '../common/swagger/attendance-view.dto';
-import { Role } from '../../generated/prisma/client';
+import { Role } from '@prisma/client';
 import { AttendanceService } from './attendance.service';
 import { MarkAttendanceDto } from './dto/mark-attendance.dto';
 import { AttendanceMeQueryDto } from './dto/attendance-me-query.dto';

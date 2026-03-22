@@ -8,7 +8,6 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { randomInt } from 'crypto';
-import { Prisma } from '../../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { RegisterDto } from './dto/register.dto';
 import {
@@ -22,6 +21,7 @@ import type {
   PasswordResetJwtPayload,
   RefreshJwtPayload,
 } from './types/jwt-payload.types';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AuthService {

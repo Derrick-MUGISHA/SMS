@@ -11,7 +11,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { MessageResponseDto } from '../common/swagger/message-response.dto';
-import { Role } from '../../generated/prisma/client';
+import { Role } from '@prisma/client';
 import { EnrollmentsService } from './enrollments.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
